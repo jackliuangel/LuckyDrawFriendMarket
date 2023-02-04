@@ -9,8 +9,8 @@
 <meta name="googlebot" content="all">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 <meta name="renderer" content="webkit">
-<head>有趣超市</head>
-<title>*有趣超市* 转盘抽奖</title>
+<head>友趣超市</head>
+<title>友趣超市 转盘抽奖</title>
 <style>
     body,html{margin:0px;padding:0px;}
     body{background-color:#ff2525;padding:10px;}
@@ -70,27 +70,30 @@
             name : "京东E卡",
             angleStart : 151,
             angleEnd : 210,
-            tips : "恭喜您抽中京东E卡一张~"
+            tips : "恭喜您获得奖金4~"
         },
         "5":{
             id : "5",
             name : "理财金5200元",
             angleStart : 211,
             angleEnd : 270,
-            tips : "恭喜您获得理财金5200元~~"
+            tips : "恭喜您获得奖金5~~"
         },
         "6":{
             id : "6",
             name : "谢谢参与",
             angleStart : 271,
             angleEnd : 330,
-            tips : "很遗憾没有能中奖，再试一次吧~"
+            tips : "恭喜您获得特等奖~"
         }
     };
 
     // 获取[n,m]的随机整数
     function getRandom (n, m) {
         var num = Math.floor(Math.random() * (m - n + 1) + n)
+        if (num ==6) {
+            num = 5
+        } 
         return num
     }
     function _begin(){
