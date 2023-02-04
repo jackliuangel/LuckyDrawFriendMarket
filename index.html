@@ -9,30 +9,31 @@
 <meta name="googlebot" content="all">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 <meta name="renderer" content="webkit">
-<head>友趣超市</head>
-<title>友趣超市 转盘抽奖</title>
+<title>友趣超市 旋转圆盘</title>
 <style>
+    h1 {text-align: center;}
     body,html{margin:0px;padding:0px;}
-    body{background-color:#ff2525;padding:10px;}
-    .wrapper{width:100%;max-width:375px;margin:0px auto;}
+    body{background-color:#f78a06;padding:10px;}
+    .wrapper{width:100%;max-width:375px;margin:0px auto;position: relative;}
     .part2{background:url(part2-bg.png) left top no-repeat;padding-top:100%;background-size:100% 100%;position:relative;}
-    .part2 .rotate-pointer{position:absolute;top:50%;left:50%;width:30%;height:30%;margin-left:-15%;margin-top:-15%;background:url(pointer.png) center center no-repeat;background-size:100% 100%;}
+    .rotate-pointer{position:absolute;top:50%;left:50%;width:30%;height:30%;margin-left:-15%;margin-top:-15%;background:url(pointer.png) center center no-repeat;background-size:100% 100%;}
 
-    #pointer {
-      transition: transform 6.5s;
-      transition-timing-function: ease-in-out;
+
+    .part2 {
+      
+      transition: transform 10.5s;
+      transition-timing-function: cubic-bezier(0.42, 0, 0, 0.99); /*调整旋转速度和起始速率*/
     }
-    a {
-      color: #fff;
-    }
+
 </style>
 </head>
+<h1>友趣超市 转盘抽奖</h1>
 <body>
 <div class="wrapper" id = "wrapper">
     <div class = "part2">
-        <div id = "pointer" class = "rotate-pointer" data-click = ""></div>
+        
     </div>
-    <!-- <a href="./index-zp.html" target="_blank">旋转圆盘版</a> -->
+    <div id = "pointer" class = "rotate-pointer" data-click = ""></div>
 </div>
 <script src="./jquery.min.js"></script>
 <script>
@@ -41,7 +42,7 @@
     var btn = $("#pointer"),
         options = {
         };
-    var isEnd = false;
+ 
     // 奖品的角度列表
     options.gifts = {
         "1":{
@@ -90,7 +91,7 @@
 
     // 获取[n,m]的随机整数
     function getRandom (n, m) {
-        var num = Math.floor(Math.random() * (m - n + 1) + n)
+        var num =  Math.floor(Math.random() * (m - n + 1) + n)
         if (num >=271 && num <=330) {
             num = 270
         } 
@@ -98,7 +99,7 @@
     }
     function _begin(){
 
-        var base = 2160; //和transition: transform 6.5s;对应 1圈用1s
+        var base = 2160; //和transition: transform 10.5s;对应
 
         var result = getRandom(-30,330); // 随机
         
@@ -108,19 +109,20 @@
           result = getRandom(options.gifts[_key].angleStart,options.gifts[_key].angleEnd)
         }
 
+        // result = 40
+        var deg = (base+result)
 
-        var deg = -(base+result)
+        $(".part2").css({"transform":"rotate("+deg+"deg)"});
 
-
-
-        btn.css({"transform":"rotate("+deg+"deg)"});
-
-        btn.on('transitionend',function(){
+        $(".part2").on('transitionend',function(){
+            console.log(result)
             for (var key in options.gifts) {
 
               if (options.gifts[key].angleStart <= result && result<=options.gifts[key].angleEnd) {
+
                 confirm(options.gifts[key].tips);
                 window.location.reload()
+
               }
             }
         })
